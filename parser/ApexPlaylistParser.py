@@ -1,5 +1,6 @@
 import os
 import vdf
+from pprint import pprint
 # https://github.com/ValvePython/vdf
 # https://developer.valvesoftware.com/wiki/KeyValues
 
@@ -28,14 +29,25 @@ class ApexPlaylistParser:
                 return d
 
         def getPlaylists(self):
+                """Parse out playlists.
+                Output: dict(playlistLabel, playlistVariables, inherit)
+                playlistLabel = playlist name
+                playlistVariables = key/value pairs of playlist variables
+                inherit = None or playlist label of parent playlist
+                """
                 try:
                         result = []
                         playlists = self.parse()['playlists']['Playlists']
                         for playlist in playlists:
                                 print(playlist)
+                                try:
+                                        inherit = playlists[playlist]['inherit']
+                                except KeyError:
+                                        inherit = None # no other playlist has been inherited from yet.
                                 result.append(dict(
                                         playlistLabel = playlist,
-                                        playlistVariables = playlists[playlist]['vars']
+                                        playlistVariables = playlists[playlist]['vars'],
+                                        inherit=inherit
                                 ))
                         return result
 
@@ -66,4 +78,5 @@ if __name__ == '__main__':
         p.preprocess()
         playlists = p.getPlaylists()
         for k in playlists:
+                pprint(k, indent=4)
         p.postprocess()
