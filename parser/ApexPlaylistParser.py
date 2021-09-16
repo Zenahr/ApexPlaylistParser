@@ -106,13 +106,6 @@ class QuickApexPlaylistParser:
                 return newData
 
 if __name__ == '__main__':
-        # p = ApexPlaylistParser('./test.txt')
-        # p.preprocess()
-        # playlists = p.getPlaylists()
-        # for k in playlists:
-        #         pprint(k, indent=4)
-        # p.postprocess()
-
         oldPlaylists = QuickApexPlaylistParser('./test.txt')
         # add/remove/modify playlists here
         # then save the new data
