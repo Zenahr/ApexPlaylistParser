@@ -3,6 +3,8 @@ import vdf
 # https://github.com/ValvePython/vdf
 # https://developer.valvesoftware.com/wiki/KeyValues
 
+# TODO: pass raw file data around instead of creating intermediate file on disk.
+
 PARSER_FIX_TOKEN = '___SOME_RANDOM_TOKEN___'
 INTERMEDIATE_FILE = 'intermediate.txt'
 
@@ -27,12 +29,26 @@ class ApexPlaylistParser:
 
         def getPlaylists(self):
                 try:
-                        return vdf.parse(open(INTERMEDIATE_FILE))['playlists']['Playlists']
+                        result = []
+                        playlists = self.parse()['playlists']['Playlists']
+                        for playlist in playlists:
+                                print(playlist)
+                                result.append(dict(
+                                        playlistLabel = playlist,
+                                        playlistVariables = playlists[playlist]['vars']
+                                ))
+                        return result
+
+                        return dict(
+                                playlistLabels = playlists.keys()
+                        )
                 except KeyError:
                         print('something went wrong. Playlists could not be found.')
 
         def save(self, newData):
-                vdf.dump(newData, open(self.__inputFilePath,'w'), pretty=True)
+                temp = vdf.parse(open(INTERMEDIATE_FILE))
+                temp['playlists']['Playlists'] = newData
+                vdf.dump(temp, open(self.__inputFilePath,'w'), pretty=True)
 
         def postprocess(self):
                 """Revert changes made by preprocess() to revert parser hotfix."""
@@ -45,10 +61,9 @@ class ApexPlaylistParser:
                 os.remove(INTERMEDIATE_FILE)
                 return data
 
-
 if __name__ == '__main__':
         p = ApexPlaylistParser('./test.txt')
         p.preprocess()
         playlists = p.getPlaylists()
-        print(playlists)
-        # p.postprocess()
+        for k in playlists:
+        p.postprocess()
