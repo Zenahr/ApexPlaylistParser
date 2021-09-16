@@ -6,6 +6,20 @@ from pprint import pprint
 
 # TODO: pass raw file data around instead of creating intermediate file on disk.
 
+#   _   _ ____    _    ____ _____ 
+#  | | | / ___|  / \  / ___| ____|
+#  | | | \___ \ / _ \| |  _|  _|  
+#  | |_| |___) / ___ \ |_| | |___ 
+#   \___/|____/_/   \_\____|_____|
+# 
+# create instance
+# apply instance.preprocess()
+# get playlist data via instance.getPlaylists()
+# apply instance.postprocess()
+
+# or use QuickApexPlaylistParser() instead to get the playlists immediately
+
+
 PARSER_FIX_TOKEN = '___SOME_RANDOM_TOKEN___'
 INTERMEDIATE_FILE = 'intermediate.txt'
 
@@ -73,10 +87,34 @@ class ApexPlaylistParser:
                 os.remove(INTERMEDIATE_FILE)
                 return data
 
+
+class QuickApexPlaylistParser:
+        """Quickly parse a playlist file and silently execute preprocess and cleanup operations."""
+        def __new__(cls, filePath):
+            parser = ApexPlaylistParser(filePath)
+            parser.preprocess()
+            playlists = parser.getPlaylists()
+            parser.postprocess()
+            return playlists
+        
+        @staticmethod
+        def update(newData, filePath):
+                parser = ApexPlaylistParser(filePath)
+                parser.preprocess()
+                parser.save(newData)
+                parser.postprocess()
+                return newData
+
 if __name__ == '__main__':
-        p = ApexPlaylistParser('./test.txt')
-        p.preprocess()
-        playlists = p.getPlaylists()
-        for k in playlists:
-                pprint(k, indent=4)
-        p.postprocess()
+        # p = ApexPlaylistParser('./test.txt')
+        # p.preprocess()
+        # playlists = p.getPlaylists()
+        # for k in playlists:
+        #         pprint(k, indent=4)
+        # p.postprocess()
+
+        oldPlaylists = QuickApexPlaylistParser('./test.txt')
+        # add/remove/modify playlists here
+        # then save the new data
+        newPlaylists = oldPlaylists
+        QuickApexPlaylistParser.update(newPlaylists, './test.txt')
