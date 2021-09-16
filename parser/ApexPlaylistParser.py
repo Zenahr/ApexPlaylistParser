@@ -87,7 +87,6 @@ class ApexPlaylistParser:
                 os.remove(INTERMEDIATE_FILE)
                 return data
 
-
 class QuickApexPlaylistParser:
         """Quickly parse a playlist file and silently execute preprocess and cleanup operations."""
         def __new__(cls, filePath):
@@ -106,6 +105,13 @@ class QuickApexPlaylistParser:
                 return newData
 
 if __name__ == '__main__':
+
+        #   _   _ ____    _    ____ _____   _______  __    _    __  __ ____  _     _____ 
+        #  | | | / ___|  / \  / ___| ____| | ____\ \/ /   / \  |  \/  |  _ \| |   | ____|
+        #  | | | \___ \ / _ \| |  _|  _|   |  _|  \  /   / _ \ | |\/| | |_) | |   |  _|  
+        #  | |_| |___) / ___ \ |_| | |___  | |___ /  \  / ___ \| |  | |  __/| |___| |___ 
+        #   \___/|____/_/   \_\____|_____| |_____/_/\_\/_/   \_\_|  |_|_|   |_____|_____|
+
         oldPlaylists = QuickApexPlaylistParser('./test.txt')
         # add/remove/modify playlists here
         # then save the new data
