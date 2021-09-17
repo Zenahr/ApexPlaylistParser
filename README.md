@@ -11,12 +11,13 @@
 ```py
 from ApexPlaylistParser import ApexPlaylistParser, QuickApexPlaylistParser
 ```
-
+<pre>
  _   _ ____    _    ____ _____ 
 | | | / ___|  / \  / ___| ____|
 | | | \___ \ / _ \| |  _|  _|  
 | |_| |___) / ___ \ |_| | |___ 
  \___/|____/_/   \_\____|_____|
+</pre>
 
 ```py
 from ApexPlaylistParser import QuickApexPlaylistParser
