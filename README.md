@@ -1,23 +1,18 @@
 # Apex Legends Playlist file parser
 
-# Installation
+## Installation
 
 1. pip install vdf
 2. Paste `ApexPlaylistParser.py` into your codebase
 3.
 
-# Import
+## Import
 
 ```py
 from ApexPlaylistParser import ApexPlaylistParser, QuickApexPlaylistParser
 ```
-<pre>
- _   _ ____    _    ____ _____ 
-| | | / ___|  / \  / ___| ____|
-| | | \___ \ / _ \| |  _|  _|  
-| |_| |___) / ___ \ |_| | |___ 
- \___/|____/_/   \_\____|_____|
-</pre>
+
+## Usage
 
 ```py
 from ApexPlaylistParser import QuickApexPlaylistParser
