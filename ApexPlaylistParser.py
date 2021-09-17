@@ -91,7 +91,7 @@ class ApexPlaylistParser:
                 return data
 
 class QuickApexPlaylistParser:
-        """Quickly parse a playlist file and silently execute preprocess and cleanup operations."""
+        """Quickly parse a playlist file and silently execute preprocess and cleanup operations. Use this only if you are sure you only need to READ the playlists data. Use ApexPlaylistParser class instead for advanced operations and flexibility."""
         def __new__(cls, filePath):
             parser = ApexPlaylistParser(filePath)
             parser.preprocess()
@@ -99,28 +99,5 @@ class QuickApexPlaylistParser:
             parser.postprocess()
             return playlists
 
-        def __init__(self, filePath):
-                self.filePath = filePath
-        
-        # TODO: this dones't make much sense when called since QuickApexPlaylistParser ist just a list of playlists after intialization. use __init__ instead and modify save() API accordingly.
-        def save(self, newData, destination=None):
-                """If destination is not set, input file will be overwritten"""
-                parser = ApexPlaylistParser(self.filePath)
-                parser.preprocess()
-                parser.save(newData, destination)
-                parser.postprocess()
-                return newData
-
 if __name__ == '__main__':
-
-        #   _   _ ____    _    ____ _____   _______  __    _    __  __ ____  _     _____ 
-        #  | | | / ___|  / \  / ___| ____| | ____\ \/ /   / \  |  \/  |  _ \| |   | ____|
-        #  | | | \___ \ / _ \| |  _|  _|   |  _|  \  /   / _ \ | |\/| | |_) | |   |  _|  
-        #  | |_| |___) / ___ \ |_| | |___  | |___ /  \  / ___ \| |  | |  __/| |___| |___ 
-        #   \___/|____/_/   \_\____|_____| |_____/_/\_\/_/   \_\_|  |_|_|   |_____|_____|
-
-        oldPlaylists = QuickApexPlaylistParser('./test.txt')
-        # add/remove/modify playlists here
-        # then save the new data
-        newPlaylists = oldPlaylists
-        QuickApexPlaylistParser.save(newPlaylists, './test.txt')
+        pass
