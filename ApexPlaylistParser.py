@@ -71,10 +71,13 @@ class ApexPlaylistParser:
                 except KeyError:
                         print('something went wrong. Playlists could not be found.')
 
-        def save(self, newData):
+        def save(self, newData, destination=None):
                 temp = vdf.parse(open(INTERMEDIATE_FILE))
                 temp['playlists']['Playlists'] = newData
-                vdf.dump(temp, open(self.__inputFilePath,'w'), pretty=True)
+                if destination:
+                        vdf.dump(temp, open(destination, 'w'))
+                else:
+                        vdf.dump(temp, open(self.__inputFilePath,'w'), pretty=True)
 
         def postprocess(self):
                 """Revert changes made by preprocess() to revert parser hotfix."""
@@ -95,12 +98,16 @@ class QuickApexPlaylistParser:
             playlists = parser.getPlaylists()
             parser.postprocess()
             return playlists
+
+        def __init__(self, filePath):
+                self.filePath = filePath
         
-        @staticmethod
-        def update(newData, filePath):
-                parser = ApexPlaylistParser(filePath)
+        # TODO: this dones't make much sense when called since QuickApexPlaylistParser ist just a list of playlists after intialization. use __init__ instead and modify save() API accordingly.
+        def save(self, newData, destination=None):
+                """If destination is not set, input file will be overwritten"""
+                parser = ApexPlaylistParser(self.filePath)
                 parser.preprocess()
-                parser.save(newData)
+                parser.save(newData, destination)
                 parser.postprocess()
                 return newData
 
@@ -116,4 +123,4 @@ if __name__ == '__main__':
         # add/remove/modify playlists here
         # then save the new data
         newPlaylists = oldPlaylists
-        QuickApexPlaylistParser.update(newPlaylists, './test.txt')
+        QuickApexPlaylistParser.save(newPlaylists, './test.txt')
