@@ -4,7 +4,6 @@
 
 1. pip install vdf
 2. Paste `ApexPlaylistParser.py` into your codebase
-3.
 
 ## Import
 
